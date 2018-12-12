@@ -13,49 +13,14 @@ import com.arangodb.velocypack.exception.VPackException;
 import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class main {
     public static <doc> void main(String[] args) {
-        ArangoDB arangoDB = new ArangoDB.Builder()
-                .host("127.0.0.1", 8529)
-                .user("root")
-                .password("root")
-                .build();
 
-        Collection<CollectionEntity> cols = arangoDB.db().getCollections();
-        System.out.println(cols.size());
+        ArangoSource arangoSource = new ArangoSource("127.0.0.1",8529,"root","_system","device", UUID.fromString("7021476e-ec14-47bc-b5d7-19745fe17f88"));
 
-        String collectionName = "firstCollection";
-//        try {
-//            CollectionEntity myArangoCollection = arangoDB.db("_system").createCollection(collectionName);
-//            System.out.println("Collection created: " + myArangoCollection.getName());
-//        } catch (ArangoDBException e) {
-//            System.err.println("Failed to create collection: " + collectionName + "; " + e.getMessage());
-//        }
+        arangoSource.getSample();
 
-//        BaseDocument myObject = new BaseDocument();
-//        myObject.setKey("myKey");
-//        myObject.addAttribute("a", "Foo");
-//        myObject.addAttribute("b", 42);
-//        try {
-//            arangoDB.db("_system").collection(collectionName).insertDocument(myObject);
-//            System.out.println("Document created");
-//        } catch (ArangoDBException e) {
-//            System.err.println("Failed to create document. " + e.getMessage());
-//        }
-
-        ArangoCollection vertex = arangoDB.db("_system").collection("devices");
-//        System.out.println(vertex.getProperties());
-        System.out.println(vertex.getDocument("device1",  BaseDocument.class));
-
-        final BaseDocument doc = null;
-//        final BaseDocument doc = arangoDB.db().collection("devices").getDocument("device1", BaseDocument.class);
-        System.out.println(doc.getProperties());
-
-//        try{
-//            doc.getProperties().forEach(r -> {
-//                System.out.println(r.toString());
-//            });
-//        }()
     }
 }
